@@ -26,7 +26,7 @@ public class MyFirstTest
         {
             webDriver.findElement(By.name("name")).sendKeys("vic.wintriss@scorevolunteer.org");
             System.out.println("3.  User Name Found/Entered");
-            webDriver.findElement(By.name("pass")).sendKeys("18Sep200Score");
+            webDriver.findElement(By.name("pass")).sendKeys("xxxxxxx");
             System.out.println("4.  Password Found/Entered");
             webDriver.findElement(By.id("edit-submit")).click();
             System.out.println("5.  \"LOG IN clicked\"");
@@ -56,7 +56,7 @@ public class MyFirstTest
 
                 for (int i = 0; i < values.size(); i++)
                 {
-                    System.out.println(labels.get(i).getText() + "\t\t\t" + values.get(i).getText());
+                    System.out.println(labels.get(i).getText() + "\t\t\t\t\t\t" + values.get(i).getText());
                 }
             }
         }
