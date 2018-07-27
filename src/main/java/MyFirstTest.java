@@ -2,52 +2,67 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class MyFirstTest
 {
+    private static ArrayList<WebElement> tempList = new ArrayList<WebElement>();
+    private static List<String> volunteerURLlist = new ArrayList<String>();
+    private static WebElement volunteerListRow;
+    private static WebElement table;
+    private static List<String> mentorNameList = new ArrayList<String>();
+
     public static void main(String[] args)
     {
-        System.out.println("Hello World");
+        System.out.println("1.  Hello World");
         String pathToChromeDriver = "lib/chromedriver";
         System.setProperty("webdriver.chrome.driver", "/Users/VicMini/SeleniumTry5/chromedriver");
         ChromeDriver webDriver = new ChromeDriver();
         webDriver.get("https://volunteer.score.org/");
-        System.out.println("Website Called");
+        System.out.println("1" +
+                "2.  Website Called");
         try
         {
             webDriver.findElement(By.name("name")).sendKeys("vic.wintriss@scorevolunteer.org");
-            System.out.println("User Name Found/Sent");
-            webDriver.findElement(By.name("pass")).sendKeys("xxxxxxxx");
-            System.out.println("Password Found/Sent");
+            System.out.println("3.  User Name Found/Entered");
+            webDriver.findElement(By.name("pass")).sendKeys("18Sep200Score");
+            System.out.println("4.  Password Found/Entered");
             webDriver.findElement(By.id("edit-submit")).click();
-            System.out.println("Click On LOG IN");
-            webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-            System.out.println("10 second wait finished");
+            System.out.println("5.  \"LOG IN clicked\"");
             webDriver.findElement(By.xpath("//a[text()=\"Go to CORE\"]")).click();
-            System.out.println("Found CORE and clicked it");
+            System.out.println("6.  Found \"CORE\" and clicked");
             webDriver.findElement(By.xpath("//a[text()=\"Manage Chapter Info & Volunteers\"]")).click();
-            System.out.println("Found Volunteers and clicked it");
+            System.out.println("7.  Found \"Volunteers\"and clicked");
             webDriver.findElement(By.xpath("//a[text()=\"Volunteers (91)\"]")).click();
-            System.out.println("Volunteers (91) and clicked");
-//            webDriver.findElement(By.xpath("//a[text()=\"John Batt\"]")).click();
-//            System.out.println("Found John Batt and clicked");
             List<WebElement> drop = webDriver.findElements(By.className("oddListRowS1"));
-            java.util.Iterator<WebElement> i = drop.iterator();
-            while(i.hasNext()) {
-                WebElement row = i.next();
-                System.out.println(row.getText());
+            List<String> volunteerURL = new ArrayList<String>();
+            for (WebElement elements : drop)//iterate through elements
+            {
+                List<WebElement> links = elements.findElements(By.tagName("a"));//Find all volunteer name links and add to List
+                for (WebElement we : links)
+                {
+                    if (we.getText().length() > 1)
+                    {
+                        volunteerURL.add(we.getAttribute("href"));//Link to volunteer name...gets expanded volunteer info
+                    }
+                }
             }
+            for (String link : volunteerURL)
+            {
+                webDriver.get(link);
+                List<WebElement> labels = webDriver.findElementsByClassName("label-field");//Volunteer item description
+                List<WebElement> values = webDriver.findElementsByClassName("value-field");//Volunter item info
 
-
-
-
+                for (int i = 0; i < values.size(); i++)
+                {
+                    System.out.println(labels.get(i).getText() + "\t\t\t" + values.get(i).getText());
+                }
+            }
         }
         catch (Exception e)
         {
-            System.out.println("Vic can't find user name >>>>>\n " + e);
+            System.out.println("...................................Exception => " + e);
         }
-
     }
 }
