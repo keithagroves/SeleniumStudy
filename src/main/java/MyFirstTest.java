@@ -2,21 +2,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class MyFirstTest
 {
-    private static ArrayList<WebElement> tempList = new ArrayList<WebElement>();
-    private static List<String> volunteerURLlist = new ArrayList<String>();
-    private static WebElement volunteerListRow;
-    private static List<String> name;
-    private static List<String> mentorNameList = new ArrayList<String>();
-    private static WebElement we;
-
     public static void main(String[] args)
     {
         System.out.println("1.  Hello World");
-        String pathToChromeDriver = "lib/chromedriver";
         System.setProperty("webdriver.chrome.driver", "/Users/VicMini/SeleniumTry5/chromedriver");
         ChromeDriver webDriver = new ChromeDriver();
         webDriver.get("https://volunteer.score.org/");
@@ -25,7 +18,7 @@ public class MyFirstTest
         {
             webDriver.findElement(By.name("name")).sendKeys("vic.wintriss@scorevolunteer.org");
             System.out.println("3.  User Name Found/Entered");
-            webDriver.findElement(By.name("pass")).sendKeys("xxxxxxxxxx");
+            webDriver.findElement(By.name("pass")).sendKeys("18Sep200Score");
             System.out.println("4.  Password Found/Entered");
             webDriver.findElement(By.id("edit-submit")).click();
             System.out.println("5.  \"LOG IN clicked\"");
@@ -52,25 +45,37 @@ public class MyFirstTest
                 webDriver.get(volunteerInfoLink);
                 List<WebElement> labels = webDriver.findElementsByClassName("label-field");//Volunteer item description
                 List<WebElement> values = webDriver.findElementsByClassName("value-field");//Volunter item info
-
-                for (int i = 0; i < 25; i++)
+                List<WebElement> classes = webDriver.findElements(By.className("value-field-photo"));
+                Iterator<WebElement> labelIterator = labels.iterator();
+                Iterator<WebElement> valueIterator = values.iterator();
+                while (labelIterator.hasNext() && valueIterator.hasNext())
                 {
-                    if (labels.get(i).getText().equals("First Name:"))
+                    WebElement label = labelIterator.next();
+                    WebElement value = valueIterator.next();
+                    if(label.getText().equals("First Name:"))
                     {
-                        System.out.print(values.get(i).getText() + " ");
+                        System.out.print(value.getText() + " ");
                     }
-                    if (labels.get(i).getText().equals("Last Name:"))
+                    if (label.getText().equals("Last Name:"))
                     {
-                        System.out.println(values.get(i).getText());
+                        System.out.print(value.getText() + " ");
                     }
-                    //System.out.println(labels.get(i).getText() + "\t\t\t\t\t\t" + values.get(i).getText());
+                    if (label.getText().equals("E-mail Address:"))
+                    {
+                        System.out.print(value.getText() + " ");
+                    }
+                    if (label.getText().equals("Career Summary:"))
+                    {
+                        System.out.print(value.getText() + " ");
+                    }
                 }
+                System.out.println("\n.................................... Next Volunteer .............................");
             }
-            System.out.println(".................................... New Volunteer .............................");
         }
         catch (Exception e)
         {
             System.out.println("...................................Exception => " + e);
         }
+        System.out.println("Proper Finish...hooray!");
     }
 }
