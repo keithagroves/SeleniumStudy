@@ -18,7 +18,7 @@ public class MyFirstTest
         {
             webDriver.findElement(By.name("name")).sendKeys("vic.wintriss@scorevolunteer.org");
             System.out.println("3.  User Name Found/Entered");
-            webDriver.findElement(By.name("pass")).sendKeys("xxxxxxxxx");
+            webDriver.findElement(By.name("pass")).sendKeys("xxxxxxxxxxx");
             System.out.println("4.  Password Found/Entered");
             webDriver.findElement(By.id("edit-submit")).click();
             System.out.println("5.  \"LOG IN clicked\"");
