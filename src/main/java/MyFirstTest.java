@@ -1,16 +1,20 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class MyFirstTest
 {
+    private static int i;
+
     public static void main(String[] args)
     {
         System.out.println("1.  Hello World");
-        System.setProperty("webdriver.chrome.driver", "/Users/VicMini/SeleniumTry5/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "/Users/VicMini/Documents/GitHub/SeleniumStudy/chromedriver");
         ChromeDriver webDriver = new ChromeDriver();
         webDriver.get("https://volunteer.score.org/");
         System.out.println("2.  Website Called");
@@ -18,7 +22,7 @@ public class MyFirstTest
         {
             webDriver.findElement(By.name("name")).sendKeys("vic.wintriss@scorevolunteer.org");
             System.out.println("3.  User Name Found/Entered");
-            webDriver.findElement(By.name("pass")).sendKeys("xxxxxxxxxxx");
+            webDriver.findElement(By.name("pass")).sendKeys("18Sep200Score");
             System.out.println("4.  Password Found/Entered");
             webDriver.findElement(By.id("edit-submit")).click();
             System.out.println("5.  \"LOG IN clicked\"");
@@ -40,34 +44,37 @@ public class MyFirstTest
                     }
                 }
             }
-            for (String volunteerInfoLink : volunteerURLlist)
+            for (String volunteerInfoLink : volunteerURLlist)//Iterate through all volunteers
             {
                 webDriver.get(volunteerInfoLink);
                 List<WebElement> labels = webDriver.findElementsByClassName("label-field");//Volunteer item description
                 List<WebElement> values = webDriver.findElementsByClassName("value-field");//Volunter item info
-                List<WebElement> classes = webDriver.findElements(By.className("value-field-photo"));
-                Iterator<WebElement> labelIterator = labels.iterator();
-                Iterator<WebElement> valueIterator = values.iterator();
-                while (labelIterator.hasNext() && valueIterator.hasNext())
+                ListIterator labelIterator  = labels.listIterator();
+                int labelTableSize = labels.size();
+                while (labelIterator.nextIndex() < labelTableSize -1)//Iterate through selected volunteer attributes
                 {
-                    WebElement label = labelIterator.next();
-                    WebElement value = valueIterator.next();
-                    if(label.getText().equals("First Name:"))
-                    {
-                        System.out.print(value.getText() + " ");
-                    }
-                    if (label.getText().equals("Last Name:"))
-                    {
-                        System.out.print(value.getText() + " ");
-                    }
-                    if (label.getText().equals("E-mail Address:"))
-                    {
-                        System.out.print(value.getText() + " ");
-                    }
-                    if (label.getText().equals("Career Summary:"))
-                    {
-                        System.out.print(value.getText() + " ");
-                    }
+                    labelIterator.next();
+                    int labelIndex = labelIterator.nextIndex();
+
+                    System.out.println("Label index: " + labelIndex + " Label value: " + labels.get(labelIndex).getText());
+//                    WebElement label = labels.get(labelIterator.nextIndex());
+//                    WebElement value = values.get(labelIterator.nextIndex());
+//                    if(label.getText().equals("First Name:"))
+//                    {
+//                        System.out.print("(" + i++ + ")  " + label.getText() + "= " + value.getText() + " ");
+//                    }
+//                    if (label.getText().equals("Last Name:"))
+//                    {
+//                        System.out.print(value.getText() + " ");
+//                    }
+//                    if (label.getText().equals("E-mail Address:"))
+//                    {
+//                        System.out.println(value.getText() + " ");
+//                    }
+//                    if (label.getText().equals("Career Summary:"))
+//                    {
+//                        System.out.print(value.getText() + " ");
+//                    }
                 }
                 System.out.println("\n.................................... Next Volunteer .............................");
             }
