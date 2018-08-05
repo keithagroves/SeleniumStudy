@@ -16,7 +16,7 @@ public class MyFirstTest
         System.out.println("1.  Hello World");
         System.setProperty("webdriver.chrome.driver", "/Users/VicMini/Documents/GitHub/SeleniumStudy/chromedriver");
         ChromeDriver webDriver = new ChromeDriver();
-        webDriver.get("https://volunteer.score.org/");
+        webDriver.get("https://xxxxxxxx/");
         System.out.println("2.  Website Called");
         try
         {
