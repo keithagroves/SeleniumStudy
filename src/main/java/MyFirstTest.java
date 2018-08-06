@@ -44,45 +44,37 @@ public class MyFirstTest
                     }
                 }
             }
-            for (String volunteerInfoLink : volunteerURLlist)//Iterate through all volunteers
-            {
-                webDriver.get(volunteerInfoLink);
-                List<WebElement> labels = webDriver.findElementsByClassName("label-field");//Volunteer item description
+	        for (String volunteerInfoLink : volunteerURLlist)
+	        {
+	            webDriver.get(volunteerInfoLink);
+	            List<WebElement> labels = webDriver.findElementsByClassName("label-field");//Volunteer item description
                 List<WebElement> values = webDriver.findElementsByClassName("value-field");//Volunter item info
-                ListIterator labelIterator  = labels.listIterator();
-                int labelTableSize = labels.size();
-                while (labelIterator.nextIndex() < labelTableSize -1)//Iterate through selected volunteer attributes
+                List<WebElement> classes = webDriver.findElements(By.className("imagecache"));
+	               
+	            Iterator<WebElement> labelIterator = labels.iterator();
+	            Iterator<WebElement> valueIterator = values.iterator();
+	            while (labelIterator.hasNext() && valueIterator.hasNext())
                 {
-                    labelIterator.next();
-                    int labelIndex = labelIterator.nextIndex();
-
-                    System.out.println("Label index: " + labelIndex + " Label value: " + labels.get(labelIndex).getText());
-//                    WebElement label = labels.get(labelIterator.nextIndex());
-//                    WebElement value = values.get(labelIterator.nextIndex());
-//                    if(label.getText().equals("First Name:"))
-//                    {
-//                        System.out.print("(" + i++ + ")  " + label.getText() + "= " + value.getText() + " ");
-//                    }
-//                    if (label.getText().equals("Last Name:"))
-//                    {
-//                        System.out.print(value.getText() + " ");
-//                    }
-//                    if (label.getText().equals("E-mail Address:"))
-//                    {
-//                        System.out.println(value.getText() + " ");
-//                    }
-//                    if (label.getText().equals("Career Summary:"))
-//                    {
-//                        System.out.print(value.getText() + " ");
-//                    }
+                    WebElement label = labelIterator.next();
+	                WebElement value = valueIterator.next();
+	                profile.put(label.getText(),value.getText());
+	            }
+	            PrintWriter out = new PrintWriter(new File("info.txt"));
+                for(String labelName : profile.keySet()) {
+		            out.println(labelName + "" + profile.get(labelName));
+		        }
+	            for(WebElement image: classes) {
+                	out.println("image: " +image.getAttribute("src"));
                 }
-                System.out.println("\n.................................... Next Volunteer .............................");
-            }
-        }
-        catch (Exception e)
-        {
-            System.out.println("...................................Exception => " + e);
-        }
-        System.out.println("Proper Finish...hooray!");
-    }
+	            out.println("\n.................................... Next Volunteer .............................");
+	            out.close();
+	        }
+	             
+	        }
+	        catch (Exception e)
+	        {
+	            System.out.println("...................................Exception => " + e);
+	        }
+	        System.out.println("Proper Finish...hooray!");
+	    }
 }
